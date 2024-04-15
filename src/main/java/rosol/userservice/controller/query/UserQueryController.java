@@ -9,6 +9,7 @@ import rosol.userservice.dto.UserDto;
 import rosol.userservice.model.AppUser;
 import rosol.userservice.service.UserQueryService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public class UserQueryController {
     public ResponseEntity<?> getUsers(){
         List<UserDto> users = this.userQueryService.getAllUsersDto();
         if (users.isEmpty()){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(new ArrayList<>());
         } else {
             return ResponseEntity.ok(users);
         }

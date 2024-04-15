@@ -1,24 +1,15 @@
 package rosol.userservice.service.impl;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import rosol.userservice.config.SystemConfiguration;
 import rosol.userservice.dto.UserDto;
-import rosol.userservice.model.AppRole;
 import rosol.userservice.model.AppUser;
 import rosol.userservice.repository.UserRepository;
 import rosol.userservice.service.UserCommandService;
 import rosol.userservice.service.impl.interservicecomm.RolesService;
-import rosol.userservice.util.JsonConverterController;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -43,13 +34,9 @@ public class UserCommandServiceImpl implements UserCommandService {
     @Override
     public AppUser createActiveUser(String userName, String userLastname, LocalDate dateOfBirth, char gender, String nationality, String phone, String email,
                                     String username, String password, String entityId, int nationalId, String role, int permission, String missionId) {
-        try {
-            AppUser appUser = new AppUser(userName, userLastname, dateOfBirth, gender, nationality, phone, email, username, password,
-                    entityId, nationalId, this.rolesService.getRoleIdByName(role), permission, missionId, new Date(), new Date(), true);
-            return this.userRepository.save(appUser);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        AppUser appUser = new AppUser(userName, userLastname, dateOfBirth, gender, nationality, phone, email, username, password,
+                entityId, nationalId, 1, permission, missionId, new Date(), new Date(), true);
+        return this.userRepository.save(appUser);
     }
 
     @Override
